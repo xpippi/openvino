@@ -288,6 +288,9 @@ std::vector<int> get_logic_cores(const std::vector<int> cpu_ids) {
 }
 
 void set_cpu_used(std::vector<int>& cpu_ids, int used) {
+    static std::mutex new_mutex;
+    std::lock_guard<std::mutex> lock{new_mutex};
+
     const auto cpu_size = static_cast<int>(cpu_ids.size());
     for (int i = 0; i < cpu_size; i++) {
         if (cpu_ids[i] < cpu._processors) {
